@@ -16,7 +16,9 @@ class ClockComponent extends HTMLElement {
         this.img.src = canvas.toDataURL()
     }
     connectedCallback() {
-        this.render()
+        setInterval(()=>{
+            this.render()
+        },1000)
     }
 }
 class Clock {
