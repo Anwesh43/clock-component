@@ -31,10 +31,42 @@ class Clock {
         this.sa = seconds * 6
         this.ma = minute * 6 + (seconds/60)*6
         this.ha = hour * 30 + (minute/60)*30+(seconds/3600)*30
+        console.log(`${hour}:${minute}:${seconds}`)
+    }
+    drawSecond(context) {
+        context.lineWidth = clockSize/100
+        context.save()
+        context.rotate(this.sa*Math.PI/180)
+        context.beginPath()
+        context.moveTo(0,0)
+        context.lineTo(0,-clockSize/5)
+        context.stroke()
+        context.restore()
+    }
+    drawMinute(context) {
+        context.lineWidth = clockSize/50
+        context.save()
+        context.rotate(this.ma*Math.PI/180)
+        context.beginPath()
+        context.moveTo(0,0)
+        context.lineTo(0,-clockSize/6)
+        context.stroke()
+        context.restore()
+    }
+    drawHour(context) {
+      context.lineWidth = clockSize/30
+      context.save()
+      context.rotate(this.ha*Math.PI/180)
+      context.beginPath()
+      context.moveTo(0,0)
+      context.lineTo(0,-clockSize/8)
+      context.stroke()
+      context.restore()
     }
     draw(context) {
         context.strokeStyle = 'black'
-        context.lineWidth = clockSize/40
+        context.lineWidth = clockSize/60
+        context.lineCap = 'round'
         context.beginPath()
         context.save()
         context.translate(clockSize/2,clockSize/2)
@@ -53,7 +85,11 @@ class Clock {
             context.fillText(text,-tw/2,-clockSize/4)
             context.restore()
         }
+        this.drawSecond(context)
+        this.drawMinute(context)
+        this.drawHour(context)
         context.restore()
+        this.getTimeAngles()
     }
 }
 customElements.define('clock-component',ClockComponent)
